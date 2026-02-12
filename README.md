@@ -22,14 +22,14 @@ Durante el desarrollo se realizaron los siguientes pasos principales:
 - Extracción de características estadísticas por secuencia.
 - Escalado de las características.
 - Entrenamiento de distintos modelos de clasificación.
-- Evaluación mediante validación cruzada y análisis de errores.
+- Evaluación mediante validación cruzada y análisis cualitativo de errores.
 
 ## 🛠️ Modelos utilizados
 
 Se evaluaron distintos modelos, seleccionados por su simplicidad y buen
 desempeño en conjuntos de datos pequeños:
 
-- **Linear SVM (SVM lineal)**: clasificador lineal robusto para espacios de
+- **Linear SVM (SVM lineal)**: clasificador lineal adecuado para espacios de
   alta dimensión.
 - **Random Forest**: modelo basado en ensambles de árboles de decisión.
 - **KNN (K-Nearest Neighbors)**: clasificador basado en vecinos más cercanos.
@@ -44,12 +44,43 @@ Los modelos fueron evaluados mediante validación cruzada sobre el conjunto
 de entrenamiento. Posteriormente, el modelo final se aplicó a un conjunto de
 prueba independiente para generar las predicciones.
 
-A partir de la inspección manual de los videos de prueba se observó que
-varios errores de clasificación se deben a movimientos adicionales durante
-la caminata (como sacar el teléfono, consultar el reloj o manipular objetos),
-así como a inestabilidad en la detección de la pose, especialmente en brazos,
-manos y hombros. Estas condiciones afectan directamente los descriptores
-calculados y explican parte de las confusiones observadas entre personas.
+A partir de la revisión manual de los videos de prueba se observó que muchos
+errores están asociados a movimientos adicionales durante la caminata
+(sacar el teléfono, consultar el reloj, manipular objetos), así como a
+inestabilidad en la detección de la pose, principalmente en brazos, manos y
+hombros. Estas condiciones afectan directamente los descriptores
+calculados y explican parte de las confusiones observadas.
+
+## 📂 Organización del repositorio
+
+Este repositorio incluye los siguientes archivos principales:
+
+- `Sensado_análisis_video.ipynb`  
+  Notebook principal con todo el flujo de análisis, entrenamiento y
+  evaluación.
+
+- `batch_extract_pose.py`  
+  Script utilizado para la extracción de landmarks corporales a partir de
+  los videos y generación de los archivos CSV de pose.
+
+- `labels_example.csv`  
+  Archivo de ejemplo con el formato de etiquetas utilizado por el notebook.
+  Contiene únicamente identificadores numéricos y se incluye como plantilla.
+
+> Para ejecutar el notebook, renombra `labels_example.csv` a `labels.csv`.
+
+El archivo real de etiquetas utilizado en el experimento no se incluye en
+este repositorio.
+
+## 📌 Nota sobre el modelo de MediaPipe
+
+El archivo del modelo de MediaPipe Pose (`pose_landmarker.task`) no se
+incluye en el repositorio debido a restricciones de tamaño.
+
+Para poder ejecutar el script de extracción de pose, es necesario descargar
+el modelo oficial de MediaPipe Pose y colocar el archivo
+`pose_landmarker.task` en la misma carpeta que el script
+`batch_extract_pose.py`.
 
 ## 📁 Requisitos
 
@@ -66,3 +97,4 @@ Para ejecutar el notebook correctamente es necesario contar con:
 
 Si se desea reproducir el entorno completo utilizado en la práctica, se
 incluye el archivo `environment.yml` para crear el entorno con conda.
+
