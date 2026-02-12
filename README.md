@@ -1,1 +1,68 @@
-# Sensado-y-Analisis-de-Video
+# Identificación de personas por caminata usando landmarks corporales 🚶‍♀️
+
+Este proyecto forma parte de la Maestría en Ciencias de la Computación y
+consiste en desarrollar un sistema para la identificación de personas a
+partir de secuencias de caminata, utilizando landmarks corporales obtenidos
+de videos.
+
+Se trabajó con un conjunto de datos colectivo de secuencias grabadas por
+diferentes personas, utilizando un conjunto para entrenamiento y un
+conjunto independiente para validación externa.
+
+## 🧠 Descripción
+
+El objetivo principal es transformar secuencias de pose corporal en
+descriptores numéricos y entrenar modelos de clasificación para identificar
+a qué persona pertenece cada secuencia de caminata.
+
+Durante el desarrollo se realizaron los siguientes pasos principales:
+
+- Extracción de landmarks corporales por frame utilizando MediaPipe Pose.
+- Construcción de archivos CSV con las coordenadas 3D de cada articulación.
+- Extracción de características estadísticas por secuencia.
+- Escalado de las características.
+- Entrenamiento de distintos modelos de clasificación.
+- Evaluación mediante validación cruzada y análisis de errores.
+
+## 🛠️ Modelos utilizados
+
+Se evaluaron distintos modelos, seleccionados por su simplicidad y buen
+desempeño en conjuntos de datos pequeños:
+
+- **Linear SVM (SVM lineal)**: clasificador lineal robusto para espacios de
+  alta dimensión.
+- **Random Forest**: modelo basado en ensambles de árboles de decisión.
+- **KNN (K-Nearest Neighbors)**: clasificador basado en vecinos más cercanos.
+
+El modelo SVM lineal presentó el mejor desempeño promedio en términos de
+F1-score macro durante la validación cruzada, por lo que fue seleccionado
+como modelo final.
+
+## 📊 Resultado general
+
+Los modelos fueron evaluados mediante validación cruzada sobre el conjunto
+de entrenamiento. Posteriormente, el modelo final se aplicó a un conjunto de
+prueba independiente para generar las predicciones.
+
+A partir de la inspección manual de los videos de prueba se observó que
+varios errores de clasificación se deben a movimientos adicionales durante
+la caminata (como sacar el teléfono, consultar el reloj o manipular objetos),
+así como a inestabilidad en la detección de la pose, especialmente en brazos,
+manos y hombros. Estas condiciones afectan directamente los descriptores
+calculados y explican parte de las confusiones observadas entre personas.
+
+## 📁 Requisitos
+
+Para ejecutar el notebook correctamente es necesario contar con:
+
+- Python 3.x
+- Librerías principales:
+  - `mediapipe`
+  - `scikit-learn`
+  - `numpy`
+  - `pandas`
+  - `matplotlib`
+  - `opencv-python`
+
+Si se desea reproducir el entorno completo utilizado en la práctica, se
+incluye el archivo `environment.yml` para crear el entorno con conda.
